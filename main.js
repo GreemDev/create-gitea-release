@@ -253,7 +253,8 @@ async function uploadFiles(client, owner, repo, release_id, all_files, params) {
     }
     if (params.md5sum) {
       let hash = hashes.md5;
-      let blob = new Blob([hash], { type : 'plain/text' });
+      const checksumLine = `${hash}  ${path.basename(filepath)}\n`;
+      let blob = new Blob([checksumLine], { type : 'plain/text' });
       await client.repository.repoCreateReleaseAttachment({
         owner: owner,
         repo: repo,
@@ -264,7 +265,8 @@ async function uploadFiles(client, owner, repo, release_id, all_files, params) {
     }
     if (params.sha256sum) {
       let hash = hashes.sha256;
-      let blob = new Blob([hash], { type : 'plain/text' });
+      const checksumLine = `${hash}  ${path.basename(filepath)}\n`;
+      let blob = new Blob([checksumLine], { type : 'plain/text' });
       await client.repository.repoCreateReleaseAttachment({
         owner: owner,
         repo: repo,
